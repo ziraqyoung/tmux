@@ -3,19 +3,19 @@
 export LC_ALL=en_US.UTF-8
 
 current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source $current_dir/utils.sh
+source "$current_dir"/utils.sh
 
 linux_acpi() {
   arg=$1
-  BAT=$(ls -d /sys/class/power_supply/*)
+  BAT=$(ls -d /sys/class/power_supply/BAT* | head -1)
   if [ ! -x "$(which acpi 2> /dev/null)" ];then
     case "$arg" in
       status)
-        cat $BAT/status
+        cat "$BAT"/status
         ;;
 
       percent)
-        cat $BAT/capacity
+        cat "$BAT"/capacity
         ;;
 
       *)
