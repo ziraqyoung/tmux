@@ -3,7 +3,7 @@
 export LC_ALL=en_US.UTF-8
 
 current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source $current_dir/utils.sh
+source "$current_dir"/utils.sh
 
 # set your own hosts so that a wifi is recognised even without internet access
 HOSTS=$(get_tmux_option "@dracula-network-hosts" "google.com github.com example.com")
@@ -15,11 +15,11 @@ get_ssid()
   # Check OS
   case $(uname -s) in
     Linux)
-      SSID=$(iw dev | sed -nr 's/^\t\tssid (.*)/\1/p')
+      SSID=$(iwgetid -r)
       if [ -n "$SSID" ]; then
-        echo "$wifi_label$SSID"
+        printf '%s' "  $SSID"
       else
-        echo "$ethernet_label"
+        echo '󰈀 Ethernet'
       fi
       ;;
 
